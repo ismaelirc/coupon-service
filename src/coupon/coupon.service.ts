@@ -65,35 +65,32 @@ export class CouponService {
   }
 
   async createCoupon(dto: CouponDto) {
-    const id = uuidv4();
     try {
       //const isValid = await this.productService.validateProducts(dto.products);
 
       //if (!isValid) {
      //   throw new BadRequestException('Um ou mais produtos são inválidos.');
     //  }
-      const coupon = await this.database.coupon.create({
-        data: {
-          id: id,
-          code: dto.code,
-          type: dto.type,
-          value: dto.value,
-          start_date: dto.start_date,
-          end_date: dto.end_date,
-          limit: dto.limit,
-          used: dto.used ?? 0,
-          products: {
-            create: dto.products.map(productId => ({
-              productId: productId,
-            })),
-          },
-        },
-        include: {
-          products: true,
-        },
-      });
+      const coupons = await Promise.all(
+        dto.products.map(async (productId) => {
+          const id = uuidv4();
+          return this.database.coupon.create({
+            data: {
+              id: id,
+              code: dto.code,
+              type: dto.type,
+              value: dto.value,
+              start_date: dto.start_date,
+              end_date: dto.end_date,
+              limit: dto.limit,
+              used: dto.used ?? 0,
+              product_id: productId,
+            },
+          });
+        }),
+      );
 
-      return coupon;
+      return coupons;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         switch (error.code) {
@@ -113,13 +110,16 @@ export class CouponService {
     }
   }
 
-  async validateCoupon(code: string) {
+  async validateCoupon(code: string, product_id: string) {
     try {
       const now = new Date();
       const coupon = await this.database.coupon.findFirst({
         where: {
           code: {
             equals: code,
+          },
+          product_id: {
+            equals: product_id,
           },
           start_date: { lte: now },
           end_date: { gte: now },

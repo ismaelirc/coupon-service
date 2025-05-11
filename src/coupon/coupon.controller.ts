@@ -83,10 +83,13 @@ export class CouponControllerV1 {
     status: 400,
     type: ErrorResponseDto,
   })
-  @Post('redeem/:coupon')
-  async redeemCoupon(@Param('coupon') code: string) {
-    this.logger.log('Redeem a coupon:', code);
-    const valid = await this.couponService.validateCoupon(code);
+  @Post('redeem/:coupon/:product')
+  async redeemCoupon(
+    @Param('coupon') code: string,
+    @Param('product') product_id: string,
+  ) {
+    this.logger.log(`Redeem a coupon: ${code} to product: ${product_id}`);
+    const valid = await this.couponService.validateCoupon(code, product_id);
     if (!valid) {
       throw new NotFoundException('Invalid coupon or expired');
     }

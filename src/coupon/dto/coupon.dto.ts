@@ -16,17 +16,26 @@ import { CouponType } from '@prisma/client';
 import { Type } from 'class-transformer';
 
 export class CouponDto {
-  @ApiProperty({ description: 'Coupon ID', required: false })
+  @ApiProperty({ description: 'Coupon ID', required: true })
   @IsUUID('4')
-  @IsOptional()
-  id?: string;
+  id: string;
+
+  @ApiProperty({
+    description: 'List of product IDs associated with this coupon',
+    type: [String],
+    example: ['123e4567-e89b-12d3-a456-426614174000'],
+  })
+  @IsArray()
+  @IsUUID('4', { each: true })
+  @IsNotEmpty()
+  products: string[];
 
   @ApiProperty({ description: 'Unique coupon code' })
   @IsString()
   @IsNotEmpty()
   code: string;
 
-  @ApiProperty({ 
+  @ApiProperty({
     description: 'Coupon type (percentage or fixed_value)',
     enum: CouponType,
     example: CouponType.percentage
@@ -71,14 +80,4 @@ export class CouponDto {
   @IsInt()
   @IsOptional()
   used?: number;
-
-  @ApiProperty({
-    description: 'List of product IDs associated with this coupon',
-    type: [String],
-    example: ['123e4567-e89b-12d3-a456-426614174000'],
-  })
-  @IsArray()
-  @IsUUID('4', { each: true })
-  @IsNotEmpty()
-  products: string[];
 }

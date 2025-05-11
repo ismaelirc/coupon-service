@@ -15,23 +15,16 @@ datasource db {
 
 model Coupon {
   id                String     @id @default(uuid()) @db.Uuid
-  code              String     @unique
+  product_id        String     @db.Uuid
+  code              String
   type              CouponType
   value             Decimal    @db.Decimal(10, 2)
   start_date        DateTime
   end_date          DateTime
-  products          CouponProduct[]
   limit             Int        @default(0)            
   used              Int        @default(0)        
   created_at        DateTime   @default(now())
   updated_at        DateTime   @updatedAt
-}
-
-model CouponProduct {
-  id         String  @id @default(uuid()) @db.Uuid
-  coupon     Coupon  @relation(fields: [couponId], references: [id])
-  couponId   String  @db.Uuid
-  productId  String  @db.Uuid
 }
 
 enum CouponType {

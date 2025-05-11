@@ -47,7 +47,7 @@ A NestJS-based microservice for managing coupons and promotions.
   - Exists
 
 ### Redeem Coupon
-- **POST** `/coupon/redeem/:coupon`
+- **POST** `/coupon/redeem/:coupon/:product`
 - Marks a coupon as used
 
 ## Error Handling
