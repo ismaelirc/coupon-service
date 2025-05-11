@@ -2,14 +2,56 @@
 
 A NestJS-based microservice for managing coupons and promotions.
 
-## Features
+## 🚀 Technologies
 
-- List coupons with pagination
-- Get coupon by ID
-- Create new coupons
-- Validate coupon availability
-- Redeem coupons
-- Health check monitoring
+- NestJS
+- PostgreSQL
+- Prisma ORM
+- Docker
+- Swagger (API Documentation)
+
+## 📋 Prerequisites
+
+- Docker
+- Docker Compose
+
+## 🔧 Installation and Execution
+
+1. Clone the repository
+```bash
+git clone [repository-url]
+cd coupon-service
+```
+
+2. Run the project with Docker Compose
+```bash
+docker-compose up --build
+```
+
+The application will be available at `http://localhost:3002/v1`
+The Swagger documentation will be available at `http://localhost:3002/v1/docs`
+
+## 📦 Project Structure
+
+```
+coupon-service/
+├── src/
+|   ├── health/
+│   │   ├── health.controller.ts
+│   │   ├── prisma.health.ts
+│   │   └── health.module.ts
+│   ├── establishment/
+│   │   ├── dto/
+│   │   ├── coupon.controller.ts
+│   │   ├── coupon.service.ts
+│   │   └── coupon.module.ts
+│   └── main.ts
+├── prisma/
+│   └── schema.prisma
+├── Dockerfile
+├── docker-compose.yml
+└── package.json
+```
 
 ## API Endpoints
 
