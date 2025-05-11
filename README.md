@@ -106,31 +106,46 @@ The service handles various error cases:
 - Invalid product references
 - Not found errors
 
-## Dependencies
+## 🗄️ Database
 
-- NestJS
-- Prisma
-- UUID
-- Product Service (external dependency)
-- @nestjs/terminus (for health checks)
+The project uses PostgreSQL as the database. Connection settings are:
 
-## Setup
+- **Host**: localhost
+- **Port**: 5435
+- **Database**: coupon-db
+- **Username**: XXXX-user
+- **Password**: XXXX
 
-1. Install dependencies:
-```bash
-npm install
+To access the database using DBeaver or another SQL client:
+1. Make sure the container is running
+2. Use the credentials above to connect
+
+## 🔍 API Documentation
+
+Complete API documentation is available through Swagger UI at:
+```
+http://localhost:3002/v1/docs
 ```
 
-2. Set up your database connection
+## 🛠️ Development
 
-3. Run migrations:
+For local development without Docker:
+
+1. Install dependencies
 ```bash
-npx prisma migrate dev
+pnpm install
 ```
 
-4. Start the service:
+2. Configure the .env file with the necessary environment variables
+
+3. Run Prisma migrations
 ```bash
-npm run start:dev
+npx prisma migrate deploy
+```
+
+4. Start the development server
+```bash
+pnpm start:dev
 ```
 
 ## Health Monitoring
@@ -139,4 +154,7 @@ The service includes a health check endpoint that monitors:
 - Database connectivity
 - Service status
 
-This can be used by container orchestrators or monitoring tools to ensure the service is running properly.
+## 📄 License
+
+This project is licensed under the CC BY-NC-ND 4.0 License.  
+Not for commercial use. See the LICENSE file for details.
