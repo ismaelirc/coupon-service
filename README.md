@@ -9,8 +9,14 @@ A NestJS-based microservice for managing coupons and promotions.
 - Create new coupons
 - Validate coupon availability
 - Redeem coupons
+- Health check monitoring
 
 ## API Endpoints
+
+### Health Check
+- **GET** `/health`
+- Returns the health status of the service and its dependencies
+- Checks database connectivity
 
 ### List Coupons
 - **GET** `/coupon`
@@ -64,6 +70,7 @@ The service handles various error cases:
 - Prisma
 - UUID
 - Product Service (external dependency)
+- @nestjs/terminus (for health checks)
 
 ## Setup
 
@@ -83,3 +90,11 @@ npx prisma migrate dev
 ```bash
 npm run start:dev
 ```
+
+## Health Monitoring
+
+The service includes a health check endpoint that monitors:
+- Database connectivity
+- Service status
+
+This can be used by container orchestrators or monitoring tools to ensure the service is running properly.
