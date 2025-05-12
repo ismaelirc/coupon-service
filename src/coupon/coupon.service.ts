@@ -26,7 +26,7 @@ export class CouponService {
     const [items, total] = await Promise.all([
       this.database.coupon.findMany({
         skip: (page - 1) * limit,
-        take: limit
+        take: limit,
       }),
       this.database.coupon.count(),
     ]);

@@ -7,7 +7,8 @@ services:
     ports:
       - '3002:3002'
     environment:
-      - DATABASE_URL=postgresql://coupon-user:123@coupon-db:5432/coupon-db?schema=public
+      - DATABASE_URL=${DATABASE_URL}
+      - PRODUCT_SERVICE_URL=${PRODUCT_SERVICE_URL}
     depends_on:
       - db
     networks:
@@ -19,9 +20,9 @@ services:
     ports:
       - '5435:5432'
     environment:
-      - POSTGRES_USER=coupon-user
-      - POSTGRES_PASSWORD=123
-      - POSTGRES_DB=coupon-db
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
